@@ -5,13 +5,13 @@ fn main() {
     println!("==================");
 
     loop {
-        let input = String::new();
+        let input = String::from("input recieved -> ");
         repl_prompt(input);
     }
 
 }
 
-fn repl_prompt(mut _input: String) {
+fn repl_prompt(mut input: String) {
     print!("lilREPL >> ");
 
     io::stdout()
@@ -19,9 +19,11 @@ fn repl_prompt(mut _input: String) {
         .expect("Failed to flush output that is tagged to print! statement");
  
     io::stdin()
-        .read_line(&mut _input)
+        .read_line(&mut input)
         .expect("failed to read input");
 
-    println!("you entered: {}", _input.trim());
+    let input = input.trim();
+
+    println!("{}", input);
     println!("==================");
 }
