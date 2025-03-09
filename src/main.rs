@@ -51,6 +51,10 @@ fn main() {
 
     //        println!("==============================================================");
     //    }
+
+    //TODO: add a get input function to reduce code blocks
+    //why is there /n at name?
+
     print!("Please enter your name: ");
     io::stdout().flush().expect("No input");
     let mut name = String::new();
