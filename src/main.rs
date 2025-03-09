@@ -1,78 +1,75 @@
 use std::io::{self, Write};
 
 #[derive(Debug)]
+enum UserType {
+    ADMIN,
+    USER,
+    NOTSELECTED,
+}
+
+#[derive(Debug)]
 struct Profile {
     name: String,
-    age: u32,
-    weight: u32,
-    area: AreaCode,
+    age: u8,
+    user_type: UserType,
 }
 
-struct CPFcalculation {
-    salary: f32,
-    percentage: f32,
-}
+impl Profile {
+    fn show(&self) {
+        println!("{self:#?}");
+    }
 
-impl CPFcalculation {
-    fn calculate_cpf(&self) -> f32 {
-        self.salary * self.percentage
+    fn build(name: String, age: u8, user_type_selection: u8) -> Self {
+        let user_type_selected = match user_type_selection {
+            1 => UserType::ADMIN,
+            2 => UserType::USER,
+            _ => UserType::NOTSELECTED,
+        };
+
+        Self {
+            name,
+            age,
+            user_type: user_type_selected,
+        }
     }
 }
-
-// tuple structs with no named fields
-#[derive(Debug)] struct AreaCode(u32,u32,u32);
 
 fn main() {
-    let _boolean: bool = true;
-
     println!("Welcome user");
-    println!("==================");
-    
-    let name = String::from("Ryan Tan");
-    let age = 28;
-    let weight =  80;
-    let area = AreaCode(21,32,3);
+    println!("==============================================================");
+    println!("P R O F I L E - B U I L D E R");
 
-    let name2 = String::from("Someone else");
-    let area2 = AreaCode(1,20,33);
+    //loop {
 
-    let profile = set_profile(name, age, weight, area);
+    //        print!("lilREPL >> ");
+    //        io::stdout().flush().expect("Failed to flush output that is tagged to print! statement");
 
-    
-    let profile2 = Profile {
-        name : name2,
-        area: area2,
-        ..profile
-    };
+    //        let mut input = String::from("");
+    //        repl_reply(&mut input);
 
-    let salary = CPFcalculation {
-        salary: 1000.0,
-        percentage: 0.8,
-    };
+    //        println!("{}", input.trim());
 
+    //        println!("==============================================================");
+    //    }
+    print!("Please enter your name: ");
+    io::stdout().flush().expect("No input");
+    let mut name = String::new();
+    io::stdin().read_line(&mut name).expect("no input");
 
-    loop {
+    print!("Please enter your age: ");
+    io::stdout().flush().expect("No input");
+    let mut age = String::new();
+    io::stdin().read_line(&mut age).expect("no input");
+    let age: u8 = age.trim().parse().expect("no input");
 
-        print!("lilREPL >> ");
-        io::stdout().flush().expect("Failed to flush output that is tagged to print! statement");
+    print!("Please enter your user type selection: ");
+    io::stdout().flush().expect("No input");
+    let mut selection = String::new();
+    io::stdin().read_line(&mut selection).expect("no input");
+    let selection: u8 = selection.trim().parse().expect("no input");
 
-        let mut input = String::from("input recieved -> ");
-
-        repl_reply(&mut input);
-
-        println!("{}", input.trim());
-
-        println!("Your profile: ");
-        println!("name: {}, age: {}, weight: {}, area1: {}, area1: {}, area1: {}", profile.name, profile.age, profile.weight, profile.area.0, profile.area.1, profile.area.2);
-        
-        println!("==============================================================");
-
-        println!("Another profile: ");
-        println!("{profile2:?}");
-        println!("{profile2:#?}"); // println! takes reference
-        dbg!(&profile2); //dbg takes ownership
-        println!("Salary after CPF is : {}", salary.calculate_cpf());
-    }
+    let user_profile = Profile::build(name, age, selection);
+    user_profile.show();
 }
 
 // pass in thru ref
@@ -80,17 +77,5 @@ fn repl_reply(input_ref: &mut String) -> &str {
     io::stdin().read_line(input_ref).expect("failed to read input");
 
     input_ref
-    
-}
-
-fn set_profile(name: String, age: u32, weight: u32, area: AreaCode) -> Profile {
-    let user_prof = Profile {
-        name: String::from(name),
-        age,
-        weight,
-        area,
-    };
-
-    user_prof
 }
 
