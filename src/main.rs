@@ -7,6 +7,13 @@ enum UserType {
     NOTSELECTED,
 }
 
+#[derive(PartialEq)]
+enum NavChoice {
+    BUILDER,
+    VIEW,
+    NOTSELECTED,
+}
+
 #[derive(Debug)]
 struct Profile {
     name: String,
@@ -38,48 +45,49 @@ fn main() {
     println!("Welcome user");
     println!("==============================================================");
     println!("P R O F I L E - B U I L D E R");
+    println!("==============================================================");
 
-    //loop {
+    let greeting_choice: NavChoice = navigate(string_to_int(display_and_read("Navigation:\n1. Build profile,\n2. View profile\n")));
 
-    //        print!("lilREPL >> ");
-    //        io::stdout().flush().expect("Failed to flush output that is tagged to print! statement");
+    if greeting_choice == NavChoice::BUILDER {
+        let name = display_and_read("Please enter your name: ");
+        let age = string_to_int(display_and_read("Please enter your age: "));
+        let selection = string_to_int(display_and_read("Please enter your user type: "));
 
-    //        let mut input = String::from("");
-    //        repl_reply(&mut input);
+        let user_profile = Profile::build(name, age, selection);
 
-    //        println!("{}", input.trim());
 
-    //        println!("==============================================================");
-    //    }
-
-    //TODO: add a get input function to reduce code blocks
-    //why is there /n at name?
-
-    print!("Please enter your name: ");
-    io::stdout().flush().expect("No input");
-    let mut name = String::new();
-    io::stdin().read_line(&mut name).expect("no input");
-
-    print!("Please enter your age: ");
-    io::stdout().flush().expect("No input");
-    let mut age = String::new();
-    io::stdin().read_line(&mut age).expect("no input");
-    let age: u8 = age.trim().parse().expect("no input");
-
-    print!("Please enter your user type selection: ");
-    io::stdout().flush().expect("No input");
-    let mut selection = String::new();
-    io::stdin().read_line(&mut selection).expect("no input");
-    let selection: u8 = selection.trim().parse().expect("no input");
-
-    let user_profile = Profile::build(name, age, selection);
-    user_profile.show();
+        user_profile.show();
+    } else {
+        println!("Not developed yet");
+    }
+    println!("==============================================================");
 }
 
-// pass in thru ref
-fn repl_reply(input_ref: &mut String) -> &str {
-    io::stdin().read_line(input_ref).expect("failed to read input");
+// NAV: helper functions
+// read input thats entered into function
+fn display_and_read(display_message: &str) -> String {
+    print!("{}", display_message);
+    io::stdout().flush().expect("no input");
+    
+    let mut user_input = String::new();
+    io::stdin().read_line(&mut user_input).expect("no input");
 
-    input_ref
+    user_input.trim().to_string()
 }
 
+fn string_to_int(input_string: String) -> u8 {
+    let convert: u8 = input_string.parse().expect("nothing");
+
+    convert
+}
+
+fn navigate(choice: u8) -> NavChoice {
+    let chosen_route = match choice {
+        1 => NavChoice::BUILDER,
+        2 => NavChoice::VIEW,
+        _ => NavChoice::NOTSELECTED,
+    };
+
+    chosen_route
+}
