@@ -1,8 +1,8 @@
-#lilREPL
+# lilREPL
 
 lilREPL is a small project that allows me to learn rust libraries
 
-##Goals:
+## Goals:
 
 1. Simple input output reading and displaying
 2. Saving user input
