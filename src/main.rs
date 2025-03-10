@@ -91,3 +91,9 @@ fn navigate(choice: u8) -> NavChoice {
 
     chosen_route
 }
+
+
+// TODO:: need to use a vec. 
+fn save_profile() {
+    todo!()
+}
