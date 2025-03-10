@@ -1,5 +1,6 @@
 mod helpers;
 use helpers::helper_fn::*;
+use helpers::ui_cmpts::*;
 
 #[derive(Debug)]
 enum UserType {
@@ -44,34 +45,25 @@ impl Profile {
 }
 
 fn main() {
+    profile_builder_greeting();
 
-    greeting_title();
-
-    let greeting_choice: NavChoice = navigate(string_to_int(display_read("Navigation:\n1. Build profile,\n2. View profile\n\n")));
+    let greeting_choice: NavChoice = navigate(string_to_int(display_then_read("Navigation:\n1. Build profile,\n2. View profile\n\n")));
 
     if greeting_choice == NavChoice::BUILDER {
-        let name = display_read("Please enter your name: ");
-        let age = string_to_int(display_read("Please enter your age: "));
-        let selection = string_to_int(display_read("Please enter your user type: "));
+        let name = display_then_read("Please enter your name: ");
+        let age = string_to_int(display_then_read("Please enter your age: "));
+        let selection = string_to_int(display_then_read("Please enter your user type: "));
 
         let user_profile = Profile::build(name, age, selection);
 
-        println!("==============================================================");
+        insert_line();
 
         user_profile.show();
     } else {
-        println!("Not developed yet");
+        not_done_notice();
     }
-    println!("==============================================================");
+    insert_line();
 }
-
-fn greeting_title() {
-    println!("Welcome user");
-    println!("==============================================================");
-    println!("P R O F I L E - B U I L D E R");
-    println!("==============================================================");
-}
-
 
 fn navigate(choice: u8) -> NavChoice {
     let chosen_route = match choice {
