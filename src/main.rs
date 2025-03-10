@@ -1,4 +1,5 @@
-use std::io::{self, Write};
+mod helper_fn;
+use helper_fn::helper_fn::*;
 
 #[derive(Debug)]
 enum UserType {
@@ -23,7 +24,8 @@ struct Profile {
 
 impl Profile {
     fn show(&self) {
-        println!("{self:#?}");
+        println!("Your Profile:\n\nName: {}\nAge: {}\nUsertype: {:?}", self.name, self.age, self.user_type);
+        //dbg!("{self:#?}");
     }
 
     fn build(name: String, age: u8, user_type_selection: u8) -> Self {
@@ -42,20 +44,19 @@ impl Profile {
 }
 
 fn main() {
-    println!("Welcome user");
-    println!("==============================================================");
-    println!("P R O F I L E - B U I L D E R");
-    println!("==============================================================");
 
-    let greeting_choice: NavChoice = navigate(string_to_int(display_and_read("Navigation:\n1. Build profile,\n2. View profile\n")));
+    greeting_title();
+
+    let greeting_choice: NavChoice = navigate(string_to_int(display_read("Navigation:\n1. Build profile,\n2. View profile\n\n")));
 
     if greeting_choice == NavChoice::BUILDER {
-        let name = display_and_read("Please enter your name: ");
-        let age = string_to_int(display_and_read("Please enter your age: "));
-        let selection = string_to_int(display_and_read("Please enter your user type: "));
+        let name = display_read("Please enter your name: ");
+        let age = string_to_int(display_read("Please enter your age: "));
+        let selection = string_to_int(display_read("Please enter your user type: "));
 
         let user_profile = Profile::build(name, age, selection);
 
+        println!("==============================================================");
 
         user_profile.show();
     } else {
@@ -64,23 +65,13 @@ fn main() {
     println!("==============================================================");
 }
 
-// NAV: helper functions
-// read input thats entered into function
-fn display_and_read(display_message: &str) -> String {
-    print!("{}", display_message);
-    io::stdout().flush().expect("no input");
-    
-    let mut user_input = String::new();
-    io::stdin().read_line(&mut user_input).expect("no input");
-
-    user_input.trim().to_string()
+fn greeting_title() {
+    println!("Welcome user");
+    println!("==============================================================");
+    println!("P R O F I L E - B U I L D E R");
+    println!("==============================================================");
 }
 
-fn string_to_int(input_string: String) -> u8 {
-    let convert: u8 = input_string.parse().expect("nothing");
-
-    convert
-}
 
 fn navigate(choice: u8) -> NavChoice {
     let chosen_route = match choice {
