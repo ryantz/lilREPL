@@ -1,5 +1,5 @@
-mod helper_fn;
-use helper_fn::helper_fn::*;
+mod helpers;
+use helpers::helper_fn::*;
 
 #[derive(Debug)]
 enum UserType {
