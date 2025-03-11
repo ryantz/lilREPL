@@ -32,12 +32,12 @@ pub mod structs_enums {
         NotSelected
     }
     
-    #[derive(PartialEq)]
-    pub enum NavChoice {
-        ProfileBuilder,
-        ProfileViewer,
-        NotSelected,
-    } 
+    //#[derive(PartialEq)]
+    //pub enum NavChoice {
+    //    ProfileBuilder,
+    //    ProfileViewer,
+    //    NotSelected,
+    //} 
 
     #[derive(Debug)]
     pub struct Profile {
@@ -48,7 +48,7 @@ pub mod structs_enums {
 
     impl Profile {
         pub fn show(&self){
-            println!("name: {},\nage: {},\nuser type: {:?}\n", self.name, self.age, self.user_type);
+            println!("Preview:\n\nname: {},\nage: {},\nuser type: {:?}\n", self.name, self.age, self.user_type);
         }
 
         pub fn build(name: String, age: u8, user_type_selection: u8) -> Self {
@@ -73,14 +73,18 @@ pub mod ui_cmpts {
     }
 
     pub fn profile_builder_greeting() {
-        println!("Welcome user");
         println!("==============================================================");
         println!("P R O F I L E - B U I L D E R");
         println!("==============================================================");
     }
 
+    pub fn profile_viewer_greeting() {
+        println!("==============================================================");
+        println!("P R O F I L E - V I E W E R");
+        println!("==============================================================");
+    }
+
     pub fn not_done_notice() {
-        println!("Welcome user");
         println!("==============================================================");
         println!("XXXXXX------N O T . C R E A T E D------XXXXXX");
         println!("==============================================================");

@@ -10,26 +10,36 @@ enum NavChoice {
 
 fn main() {
     let mut profile_storage: Vec<structs_enums::Profile> = Vec::new();
-    ui_cmpts::profile_builder_greeting();
 
     loop {
+        println!("");
+        ui_cmpts::insert_line();
+        println!("Hello! PS: To exit the program, please use <C-c>");
+        ui_cmpts::insert_line();
 
         let greeting_choice: NavChoice = navigate(helper_fn::string_to_int(helper_fn::display_then_read("Navigation:\n1. Build profile,\n2. View profile\n\n")));
 
         if greeting_choice == NavChoice::ProfileBuilder {
+            ui_cmpts::profile_builder_greeting();
+
             let name = helper_fn::display_then_read("Please enter your name: ");
             let age = helper_fn::string_to_int(helper_fn::display_then_read("Please enter your age: "));
             let selection = helper_fn::string_to_int(helper_fn::display_then_read("Please enter your user type: "));
 
             let user_profile = structs_enums::Profile::build(name, age, selection);
+            ui_cmpts::insert_line();
+
+            user_profile.show();
 
             ui_cmpts::insert_line();
 
-            //user_profile.show();
             save_profile(user_profile, &mut profile_storage);
 
         } else if greeting_choice == NavChoice::ProfileViewer {
+            ui_cmpts::profile_viewer_greeting();
+
             view_stored_profiles(&profile_storage);           
+
         } else {
             ui_cmpts::not_done_notice();
         }
@@ -60,4 +70,3 @@ fn view_stored_profiles(profile_storage: &Vec<structs_enums::Profile>) {
         ui_cmpts::insert_line();
     }
 }
-
