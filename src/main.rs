@@ -44,24 +44,31 @@ impl Profile {
 }
 
 fn main() {
-    ui_cmpts::profile_builder_greeting();
+    let mut profile_storage: Vec<Profile> = Vec::new();
 
-    let greeting_choice: NavChoice = navigate(helper_fn::string_to_int(helper_fn::display_then_read("Navigation:\n1. Build profile,\n2. View profile\n\n")));
+    loop{
 
-    if greeting_choice == NavChoice::BUILDER {
-        let name = helper_fn::display_then_read("Please enter your name: ");
-        let age = helper_fn::string_to_int(helper_fn::display_then_read("Please enter your age: "));
-        let selection = helper_fn::string_to_int(helper_fn::display_then_read("Please enter your user type: "));
+        ui_cmpts::profile_builder_greeting();
 
-        let user_profile = Profile::build(name, age, selection);
+        let greeting_choice: NavChoice = navigate(helper_fn::string_to_int(helper_fn::display_then_read("Navigation:\n1. Build profile,\n2. View profile\n\n")));
 
+        if greeting_choice == NavChoice::BUILDER {
+            let name = helper_fn::display_then_read("Please enter your name: ");
+            let age = helper_fn::string_to_int(helper_fn::display_then_read("Please enter your age: "));
+            let selection = helper_fn::string_to_int(helper_fn::display_then_read("Please enter your user type: "));
+
+            let user_profile = Profile::build(name, age, selection);
+
+            ui_cmpts::insert_line();
+
+            //user_profile.show();
+            save_profile(user_profile, &mut profile_storage);
+            view_stored_profiles(&profile_storage);
+        } else {
+            ui_cmpts::not_done_notice();
+        }
         ui_cmpts::insert_line();
-
-        user_profile.show();
-    } else {
-        ui_cmpts::not_done_notice();
     }
-    ui_cmpts::insert_line();
 }
 
 fn navigate(choice: u8) -> NavChoice {
@@ -76,6 +83,16 @@ fn navigate(choice: u8) -> NavChoice {
 
 
 // TODO:: need to use a vec. 
-fn save_profile() {
-    todo!()
+fn save_profile(profile_to_save: Profile,  profile_storage:&mut Vec<Profile>) -> &mut Vec<Profile>{
+    profile_storage.push(profile_to_save);
+    
+    profile_storage
+}
+
+fn view_stored_profiles(profile_storage: &Vec<Profile>) {
+    for element in profile_storage {
+        println!("{:?}", element);
+    }
+
+
 }
