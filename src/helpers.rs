@@ -23,7 +23,6 @@ pub mod helper_fn {
 
         convert
     }
-
 }
 
 pub mod structs_enums {
@@ -31,15 +30,15 @@ pub mod structs_enums {
     pub enum UserType {
         Admin,
         User,
-        NotSelected
+        NotSelected,
     }
-    
+
     //#[derive(PartialEq)]
     //pub enum NavChoice {
     //    ProfileBuilder,
     //    ProfileViewer,
     //    NotSelected,
-    //} 
+    //}
 
     #[derive(Debug)]
     pub struct Profile {
@@ -49,8 +48,11 @@ pub mod structs_enums {
     }
 
     impl Profile {
-        pub fn show(&self){
-            println!("Preview:\n\nname: {},\nage: {},\nuser type: {:?}\n", self.name, self.age, self.user_type);
+        pub fn show(&self) {
+            println!(
+                "Preview:\n\nname: {},\nage: {},\nuser type: {:?}\n",
+                self.name, self.age, self.user_type
+            );
         }
 
         pub fn build(name: String, age: u8, user_type_selection: u8) -> Self {
@@ -61,7 +63,7 @@ pub mod structs_enums {
             };
 
             Self {
-                name, 
+                name,
                 age,
                 user_type: user_type_selected,
             }
@@ -78,20 +80,34 @@ pub mod ui_cmpts {
 
     pub fn profile_builder_greeting() {
         println!("==============================================================");
-        println!("{}P R O F I L E - B U I L D E R{}", colors::MAGENTA, colors::RESET);
+        println!(
+            "{}P R O F I L E - B U I L D E R{}",
+            colors::MAGENTA,
+            colors::RESET
+        );
         println!("==============================================================");
     }
 
     pub fn profile_viewer_greeting() {
         println!("==============================================================");
-        println!("{}P R O F I L E - V I E W E R{}", colors::YELLOW, colors::RESET);
+        println!(
+            "{}P R O F I L E - V I E W E R{}",
+            colors::YELLOW,
+            colors::RESET
+        );
         println!("==============================================================");
     }
 
     pub fn not_done_notice() {
-        println!("{}==============================================================", colors::RED);
+        println!(
+            "{}==============================================================",
+            colors::RED
+        );
         println!("XXXXXX------N O T . C R E A T E D------XXXXXX");
-        println!("=============================================================={}", colors::RESET);
+        println!(
+            "=============================================================={}",
+            colors::RESET
+        );
     }
 }
 
