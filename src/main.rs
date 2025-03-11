@@ -3,9 +3,9 @@ use helpers::*;
 
 #[derive(PartialEq)]
 enum NavChoice {
-    BUILDER,
-    VIEW,
-    NOTSELECTED,
+    ProfileBuilder,
+    ProfileViewer,
+    NotSelected,
 }
 
 fn main() {
@@ -16,7 +16,7 @@ fn main() {
 
         let greeting_choice: NavChoice = navigate(helper_fn::string_to_int(helper_fn::display_then_read("Navigation:\n1. Build profile,\n2. View profile\n\n")));
 
-        if greeting_choice == NavChoice::BUILDER {
+        if greeting_choice == NavChoice::ProfileBuilder {
             let name = helper_fn::display_then_read("Please enter your name: ");
             let age = helper_fn::string_to_int(helper_fn::display_then_read("Please enter your age: "));
             let selection = helper_fn::string_to_int(helper_fn::display_then_read("Please enter your user type: "));
@@ -28,7 +28,7 @@ fn main() {
             //user_profile.show();
             save_profile(user_profile, &mut profile_storage);
 
-        } else if greeting_choice == NavChoice::VIEW {
+        } else if greeting_choice == NavChoice::ProfileViewer {
             view_stored_profiles(&profile_storage);           
         } else {
             ui_cmpts::not_done_notice();
@@ -38,9 +38,9 @@ fn main() {
 
 fn navigate(choice: u8) -> NavChoice {
     let chosen_route = match choice {
-        1 => NavChoice::BUILDER,
-        2 => NavChoice::VIEW,
-        _ => NavChoice::NOTSELECTED,
+        1 => NavChoice::ProfileBuilder,
+        2 => NavChoice::ProfileViewer,
+        _ => NavChoice::NotSelected,
     };
 
     chosen_route
