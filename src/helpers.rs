@@ -1,5 +1,7 @@
 // establish a module
 pub mod helper_fn {
+    use super::colors;
+
     // bring the std io library into the module scope
     use std::io::{self, Write};
 
@@ -7,7 +9,7 @@ pub mod helper_fn {
         print!("{}", string_to_display);
         io::stdout().flush().expect("No input");
 
-        print!("lilREPL>> ");
+        print!("{}lilREPL>> {}", colors::BLUE, colors::RESET);
         io::stdout().flush().expect("No input");
 
         let mut input = String::new();
@@ -68,25 +70,36 @@ pub mod structs_enums {
 }
 
 pub mod ui_cmpts {
+    use super::colors;
+
     pub fn insert_line() {
         println!("==============================================================");
     }
 
     pub fn profile_builder_greeting() {
         println!("==============================================================");
-        println!("P R O F I L E - B U I L D E R");
+        println!("{}P R O F I L E - B U I L D E R{}", colors::MAGENTA, colors::RESET);
         println!("==============================================================");
     }
 
     pub fn profile_viewer_greeting() {
         println!("==============================================================");
-        println!("P R O F I L E - V I E W E R");
+        println!("{}P R O F I L E - V I E W E R{}", colors::YELLOW, colors::RESET);
         println!("==============================================================");
     }
 
     pub fn not_done_notice() {
-        println!("==============================================================");
+        println!("{}==============================================================", colors::RED);
         println!("XXXXXX------N O T . C R E A T E D------XXXXXX");
-        println!("==============================================================");
+        println!("=============================================================={}", colors::RESET);
     }
+}
+
+pub mod colors {
+    pub const RESET: &str = "\x1b[0m";
+    pub const RED: &str = "\x1b[91m";
+    pub const GREEN: &str = "\x1b[92m";
+    pub const BLUE: &str = "\x1b[94m";
+    pub const YELLOW: &str = "\x1b[93m";
+    pub const MAGENTA: &str = "\x1b[95m";
 }
