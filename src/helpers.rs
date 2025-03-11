@@ -21,6 +21,50 @@ pub mod helper_fn {
 
         convert
     }
+
+}
+
+pub mod structs_enums {
+    #[derive(Debug)]
+    pub enum UserType {
+        Admin,
+        User,
+        NotSelected
+    }
+    
+    #[derive(PartialEq)]
+    pub enum NavChoice {
+        ProfileBuilder,
+        ProfileViewer,
+        NotSelected,
+    } 
+
+    #[derive(Debug)]
+    pub struct Profile {
+        pub name: String,
+        pub age: u8,
+        pub user_type: UserType,
+    }
+
+    impl Profile {
+        pub fn show(&self){
+            println!("name: {},\nage: {},\nuser type: {:?}\n", self.name, self.age, self.user_type);
+        }
+
+        pub fn build(name: String, age: u8, user_type_selection: u8) -> Self {
+            let user_type_selected: UserType = match user_type_selection {
+                1 => UserType::Admin,
+                2 => UserType::User,
+                _ => UserType::NotSelected,
+            };
+
+            Self {
+                name, 
+                age,
+                user_type: user_type_selected,
+            }
+        }
+    }
 }
 
 pub mod ui_cmpts {

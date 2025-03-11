@@ -1,13 +1,6 @@
 mod helpers;
 use helpers::*;
 
-#[derive(Debug)]
-enum UserType {
-    ADMIN,
-    USER,
-    NOTSELECTED,
-}
-
 #[derive(PartialEq)]
 enum NavChoice {
     BUILDER,
@@ -15,40 +8,11 @@ enum NavChoice {
     NOTSELECTED,
 }
 
-#[derive(Debug)]
-struct Profile {
-    name: String,
-    age: u8,
-    user_type: UserType,
-}
-
-impl Profile {
-    fn show(&self) {
-        println!("Your Profile:\n\nName: {}\nAge: {}\nUsertype: {:?}", self.name, self.age, self.user_type);
-        //dbg!("{self:#?}");
-    }
-
-    fn build(name: String, age: u8, user_type_selection: u8) -> Self {
-        let user_type_selected = match user_type_selection {
-            1 => UserType::ADMIN,
-            2 => UserType::USER,
-            _ => UserType::NOTSELECTED,
-        };
-
-        Self {
-            name,
-            age,
-            user_type: user_type_selected,
-        }
-    }
-}
-
 fn main() {
-    let mut profile_storage: Vec<Profile> = Vec::new();
+    let mut profile_storage: Vec<structs_enums::Profile> = Vec::new();
+    ui_cmpts::profile_builder_greeting();
 
-    loop{
-
-        ui_cmpts::profile_builder_greeting();
+    loop {
 
         let greeting_choice: NavChoice = navigate(helper_fn::string_to_int(helper_fn::display_then_read("Navigation:\n1. Build profile,\n2. View profile\n\n")));
 
@@ -57,17 +21,18 @@ fn main() {
             let age = helper_fn::string_to_int(helper_fn::display_then_read("Please enter your age: "));
             let selection = helper_fn::string_to_int(helper_fn::display_then_read("Please enter your user type: "));
 
-            let user_profile = Profile::build(name, age, selection);
+            let user_profile = structs_enums::Profile::build(name, age, selection);
 
             ui_cmpts::insert_line();
 
             //user_profile.show();
             save_profile(user_profile, &mut profile_storage);
-            view_stored_profiles(&profile_storage);
+
+        } else if greeting_choice == NavChoice::VIEW {
+            view_stored_profiles(&profile_storage);           
         } else {
             ui_cmpts::not_done_notice();
         }
-        ui_cmpts::insert_line();
     }
 }
 
@@ -82,17 +47,17 @@ fn navigate(choice: u8) -> NavChoice {
 }
 
 
-// TODO:: need to use a vec. 
-fn save_profile(profile_to_save: Profile,  profile_storage:&mut Vec<Profile>) -> &mut Vec<Profile>{
+fn save_profile(profile_to_save: structs_enums::Profile,  profile_storage:&mut Vec<structs_enums::Profile>) -> &mut Vec<structs_enums::Profile>{
     profile_storage.push(profile_to_save);
     
     profile_storage
 }
 
-fn view_stored_profiles(profile_storage: &Vec<Profile>) {
+fn view_stored_profiles(profile_storage: &Vec<structs_enums::Profile>) {
     for element in profile_storage {
-        println!("{:?}", element);
+        ui_cmpts::insert_line();
+        println!("\nname: {}\nage: {}\nuser type:{:?}\n", element.name, element.age, element.user_type);
+        ui_cmpts::insert_line();
     }
-
-
 }
+
