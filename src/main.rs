@@ -90,6 +90,7 @@ fn view_stored_profiles(ref_profile_storage: &Vec<structs_enums::Profile>) {
     }
 }
 
+// hello from desktop
 fn find_profile_by_id(id: u8) {
     todo!();
 }
