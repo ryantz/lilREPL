@@ -14,7 +14,7 @@ fn main() {
     let mut profile_storage: Vec<structs_enums::Profile> = Vec::new();
 
     loop {
-        println!("");
+        println!();
         ui_cmpts::insert_line();
         println!("{}Hello! PS: To exit the program, please use <C-c>{}", colors::GREEN, colors::RESET);
         ui_cmpts::insert_line();
@@ -99,7 +99,7 @@ fn profile_finder(ref_profile_storage: &Vec<structs_enums::Profile>){
 }
 
 fn find_profile_by_id(id: usize, ref_profile_storage: &Vec<structs_enums::Profile>) -> &structs_enums::Profile {
-    let index = id;
+    let index = id - 1;
     let ref_single_val = &ref_profile_storage[index];
     println!("{:?}", ref_single_val);
 
@@ -151,9 +151,9 @@ mod tests {
         };
         let test_storage: Vec<structs_enums::Profile> = vec![prof1, prof2, prof3];
 
-        assert_eq!(find_profile_by_id(0, &test_storage), &ans1);
-        assert_eq!(find_profile_by_id(1, &test_storage), &ans2);
-        assert_eq!(find_profile_by_id(2, &test_storage), &ans3);
+        assert_eq!(find_profile_by_id(1, &test_storage), &ans1);
+        assert_eq!(find_profile_by_id(2, &test_storage), &ans2);
+        assert_eq!(find_profile_by_id(3, &test_storage), &ans3);
     }
 }
 
