@@ -50,8 +50,7 @@ pub mod structs_enums {
     impl Profile {
         pub fn show(&self) {
             println!(
-                "Preview:\n\nname: {},\nage: {},\nuser type: {:?}\n",
-                self.name, self.age, self.user_type
+                "Preview:\n\nname: {},\nage: {},\nuser type: {:?}\n",self.name, self.age, self.user_type
             );
         }
 
@@ -81,33 +80,21 @@ pub mod ui_cmpts {
     pub fn profile_builder_greeting() {
         println!("==============================================================");
         println!(
-            "{}P R O F I L E - B U I L D E R{}",
-            colors::MAGENTA,
-            colors::RESET
-        );
+            "{}P R O F I L E - B U I L D E R{}", colors::MAGENTA, colors::RESET);
         println!("==============================================================");
     }
 
     pub fn profile_viewer_greeting() {
         println!("==============================================================");
         println!(
-            "{}P R O F I L E - V I E W E R{}",
-            colors::YELLOW,
-            colors::RESET
-        );
+            "{}P R O F I L E - V I E W E R{}", colors::YELLOW, colors::RESET);
         println!("==============================================================");
     }
 
     pub fn not_done_notice() {
-        println!(
-            "{}==============================================================",
-            colors::RED
-        );
+        println!("{}==============================================================", colors::RED);
         println!("XXXXXX------N O T . C R E A T E D------XXXXXX");
-        println!(
-            "=============================================================={}",
-            colors::RESET
-        );
+        println!("=============================================================={}", colors::RESET);
     }
 }
 
