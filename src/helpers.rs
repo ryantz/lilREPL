@@ -23,10 +23,16 @@ pub mod helper_fn {
 
         convert
     }
+
+    pub fn string_to_usize(input_string: String) -> usize {
+        let convert: usize = input_string.parse().expect("No input");
+
+        convert
+    }
 }
 
 pub mod structs_enums {
-    #[derive(Debug)]
+    #[derive(Debug, PartialEq)]
     pub enum UserType {
         Admin,
         User,
@@ -40,7 +46,7 @@ pub mod structs_enums {
     //    NotSelected,
     //}
 
-    #[derive(Debug)]
+    #[derive(Debug, PartialEq)]
     pub struct Profile {
         pub name: String,
         pub age: u8,
@@ -50,7 +56,8 @@ pub mod structs_enums {
     impl Profile {
         pub fn show(&self) {
             println!(
-                "Preview:\n\nname: {},\nage: {},\nuser type: {:?}\n",self.name, self.age, self.user_type
+                "Preview:\n\nname: {},\nage: {},\nuser type: {:?}\n",
+                self.name, self.age, self.user_type
             );
         }
 
@@ -80,29 +87,53 @@ pub mod ui_cmpts {
     pub fn profile_builder_greeting() {
         println!("==============================================================");
         println!(
-            "{}P R O F I L E - B U I L D E R{}", colors::MAGENTA, colors::RESET);
+            "{}P R O F I L E - B U I L D E R{}",
+            colors::MAGENTA,
+            colors::RESET
+        );
         println!("==============================================================");
     }
 
     pub fn profile_viewer_greeting() {
         println!("==============================================================");
         println!(
-            "{}P R O F I L E - V I E W E R{}", colors::YELLOW, colors::RESET);
+            "{}P R O F I L E - V I E W E R{}",
+            colors::YELLOW,
+            colors::RESET
+        );
+        println!("==============================================================");
+    }
+
+    pub fn profile_finder_greeting() {
+        println!("==============================================================");
+        println!(
+            "{}P R O F I L E - V I E W E R{}",
+            colors::CYAN,
+            colors::RESET
+        );
         println!("==============================================================");
     }
 
     pub fn not_done_notice() {
-        println!("{}==============================================================", colors::RED);
+        println!(
+            "{}==============================================================",
+            colors::RED
+        );
         println!("XXXXXX------N O T . C R E A T E D------XXXXXX");
-        println!("=============================================================={}", colors::RESET);
+        println!(
+            "=============================================================={}",
+            colors::RESET
+        );
     }
 }
 
 pub mod colors {
+    // colours in ANSI
     pub const RESET: &str = "\x1b[0m";
     pub const RED: &str = "\x1b[91m";
     pub const GREEN: &str = "\x1b[92m";
     pub const BLUE: &str = "\x1b[94m";
     pub const YELLOW: &str = "\x1b[93m";
     pub const MAGENTA: &str = "\x1b[95m";
+    pub const CYAN: &str = "\x1b[96m";
 }
