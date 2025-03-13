@@ -1,5 +1,5 @@
 mod helpers;
-use helpers::{structs_enums::Profile, *};
+use helpers::*;
 
 #[derive(PartialEq)]
 enum NavChoice {
@@ -13,7 +13,7 @@ enum NavChoice {
 fn main() {
 
     ui_cmpts::insert_line();
-    let user_in = helper_fn::display_then_read("W E L C O M E - T O - lilREPL\n\n");
+    let user_in = helper_fn::display_then_read("W E L C O M E - T O - lilREPL\nTo start, enter: [start / s]\n");
     ui_cmpts::insert_line();
     
     let mut program_status: bool = false;
@@ -28,7 +28,7 @@ fn main() {
 
         println!();
         ui_cmpts::insert_line();
-        println!("{}Hello! PS: To exit the program, please use <C-c>{}", colors::GREEN, colors::RESET);
+        println!("{}Hello!{}", colors::GREEN, colors::RESET);
         ui_cmpts::insert_line();
 
         let greeting_choice: NavChoice = navigate(helper_fn::string_to_int(helper_fn::display_then_read("Navigation:\n1. Build profile:\n2. View profile\n3. Find Profile\n4. File Explorer\n\n")));
@@ -114,7 +114,7 @@ fn find_profile_by_id(id: usize, ref_profile_storage: &Vec<structs_enums::Profil
 }
 
 fn quit_or_cont() -> bool {
-    let user_input:String = helper_fn::display_then_read("you selected an option outside the range! Do you want to quit the program instead?\n");
+    let user_input:String = helper_fn::display_then_read("you selected an option outside the range! Do you want to quit the program instead? [yes / y / end]\n");
     
     if user_input == String::from("yes") || user_input == String::from("y") || user_input == String::from("end") {
         false
