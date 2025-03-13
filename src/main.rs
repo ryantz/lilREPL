@@ -11,35 +11,37 @@ enum NavChoice {
 }
 
 fn main() {
+
+    ui_cmpts::insert_line();
+    let user_in = helper_fn::display_then_read("W E L C O M E - T O - lilREPL\n\n");
+    ui_cmpts::insert_line();
+    
+    let mut program_status: bool = false;
+
+    if user_in == String::from("start") || user_in == String::from("s") {
+        program_status = true;
+    }
+
     let mut profile_storage: Vec<structs_enums::Profile> = Vec::new();
 
-    loop {
+    while program_status {
+
         println!();
         ui_cmpts::insert_line();
         println!("{}Hello! PS: To exit the program, please use <C-c>{}", colors::GREEN, colors::RESET);
         ui_cmpts::insert_line();
 
-        let greeting_choice: NavChoice = navigate(helper_fn::string_to_int(helper_fn::display_then_read("Navigation:\n1. Build profile:\n2. View profile\n3. Find Profile\n\n")));
-
-        //if greeting_choice == NavChoice::ProfileBuilder {
-        //    profile_builder(&mut profile_storage);
-
-        //} else if greeting_choice == NavChoice::ProfileViewer {
-
-        //    view_stored_profiles(&profile_storage);           
-
-        //} else if greeting_choice == NavChoice::FileExplorer{
-        //    todo!();
-        //} else {
-        //    ui_cmpts::not_done_notice();
-        //}
-        match greeting_choice {
+        let greeting_choice: NavChoice = navigate(helper_fn::string_to_int(helper_fn::display_then_read("Navigation:\n1. Build profile:\n2. View profile\n3. Find Profile\n4. File Explorer\n\n")));
+        
+        let end_or_no = match greeting_choice {
             NavChoice::ProfileBuilder => build_profile(&mut profile_storage),
             NavChoice::ProfileViewer => view_stored_profiles(&profile_storage),
             NavChoice::ProfileFinder => profile_finder(&profile_storage),
             NavChoice::FileExplorer => ui_cmpts::not_done_notice(),
-            NavChoice::NotSelected => ui_cmpts::not_done_notice(),
-        }
+            NavChoice::NotSelected => quit_or_cont(),
+        };
+
+        program_status = end_or_no
     }
 }
 
@@ -55,7 +57,7 @@ fn navigate(choice: u8) -> NavChoice {
     chosen_route
 }
 
-fn build_profile(ref_profile_storage: &mut Vec<structs_enums::Profile>) {
+fn build_profile(ref_profile_storage: &mut Vec<structs_enums::Profile>) -> bool {
     ui_cmpts::profile_builder_greeting();
 
     let name = helper_fn::display_then_read("Please enter your name: ");
@@ -70,6 +72,8 @@ fn build_profile(ref_profile_storage: &mut Vec<structs_enums::Profile>) {
     ui_cmpts::insert_line();
 
     save_profile(user_profile, ref_profile_storage);
+    
+    true
 }
 
 fn save_profile(profile_to_save: structs_enums::Profile,  ref_profile_storage:&mut Vec<structs_enums::Profile>) -> &mut Vec<structs_enums::Profile>{
@@ -78,7 +82,7 @@ fn save_profile(profile_to_save: structs_enums::Profile,  ref_profile_storage:&m
     ref_profile_storage
 }
 
-fn view_stored_profiles(ref_profile_storage: &Vec<structs_enums::Profile>) { 
+fn view_stored_profiles(ref_profile_storage: &Vec<structs_enums::Profile>) -> bool { 
     // profile_storage borrows ownership of Vec
     
     ui_cmpts::profile_viewer_greeting();
@@ -88,22 +92,35 @@ fn view_stored_profiles(ref_profile_storage: &Vec<structs_enums::Profile>) {
         println!("\nstorage id: {:?}\nname: {}\nage: {}\nuser type: {:?}\n", i+1 , ref_profile_storage[i].name, ref_profile_storage[i].age, ref_profile_storage[i].user_type);
         ui_cmpts::insert_line();
     }
+    true
 }
 
 // hello from desktop
-fn profile_finder(ref_profile_storage: &Vec<structs_enums::Profile>){
+fn profile_finder(ref_profile_storage: &Vec<structs_enums::Profile>) -> bool {
     ui_cmpts::profile_finder_greeting();
 
     let user_id = helper_fn::string_to_usize(helper_fn::display_then_read("Please enter the id: "));
     find_profile_by_id(user_id, ref_profile_storage);
+    
+    true
 }
 
-fn find_profile_by_id(id: usize, ref_profile_storage: &Vec<structs_enums::Profile>) -> &structs_enums::Profile {
+fn find_profile_by_id(id: usize, ref_profile_storage: &Vec<structs_enums::Profile>) -> bool {
     let index = id - 1;
     let ref_single_val = &ref_profile_storage[index];
     println!("{:?}", ref_single_val);
 
-    ref_single_val
+    true
+}
+
+fn quit_or_cont() -> bool {
+    let user_input:String = helper_fn::display_then_read("you selected an option outside the range! Do you want to quit the program instead?\n");
+    
+    if user_input == String::from("yes") || user_input == String::from("y") || user_input == String::from("end") {
+        false
+    } else {
+        true
+    }
 }
 
 
@@ -111,7 +128,8 @@ fn find_profile_by_id(id: usize, ref_profile_storage: &Vec<structs_enums::Profil
 #[cfg(test)]
 mod tests {
     use super::*;
-        
+ 
+    // good path
     #[test]
     fn test_fn_find_people_by_id() {
         let prof1 = structs_enums::Profile {
@@ -155,5 +173,7 @@ mod tests {
         assert_eq!(find_profile_by_id(2, &test_storage), &ans2);
         assert_eq!(find_profile_by_id(3, &test_storage), &ans3);
     }
+    
+
 }
 

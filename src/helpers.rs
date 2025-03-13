@@ -4,6 +4,15 @@ pub mod helper_fn {
 
     // bring the std io library into the module scope
     use std::io::{self, Write};
+    
+    // TODO:syntax highlighting for some words in the enum Keywords
+    // how to get the first word in the user input? slices?
+    // how to change the colours in real time?
+    pub fn read_input(string_to_display: &str) {
+        println!("lilREPL>>");
+        io::stdout().flush().expect("no input");
+        todo!();
+    }
 
     pub fn display_then_read(string_to_display: &str) -> String {
         print!("{}", string_to_display);
@@ -29,6 +38,16 @@ pub mod helper_fn {
 
         convert
     }
+
+}
+
+// TODO: How do you read the inputs and read symbols?
+// input => solve 1 + 1 
+// output => 2
+pub mod simple_maths {
+    pub fn add(){
+        todo!();
+    }
 }
 
 pub mod structs_enums {
@@ -39,12 +58,9 @@ pub mod structs_enums {
         NotSelected,
     }
 
-    //#[derive(PartialEq)]
-    //pub enum NavChoice {
-    //    ProfileBuilder,
-    //    ProfileViewer,
-    //    NotSelected,
-    //}
+    pub enum Flow {
+        Status(String),
+    }
 
     #[derive(Debug, PartialEq)]
     pub struct Profile {
@@ -114,7 +130,7 @@ pub mod ui_cmpts {
         println!("==============================================================");
     }
 
-    pub fn not_done_notice() {
+    pub fn not_done_notice() -> bool {
         println!(
             "{}==============================================================",
             colors::RED
@@ -124,6 +140,7 @@ pub mod ui_cmpts {
             "=============================================================={}",
             colors::RESET
         );
+        true
     }
 }
 
