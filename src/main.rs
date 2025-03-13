@@ -1,5 +1,5 @@
 mod helpers;
-use helpers::*;
+use helpers::{structs_enums::Profile, *};
 
 #[derive(PartialEq)]
 enum NavChoice {
@@ -105,12 +105,12 @@ fn profile_finder(ref_profile_storage: &Vec<structs_enums::Profile>) -> bool {
     true
 }
 
-fn find_profile_by_id(id: usize, ref_profile_storage: &Vec<structs_enums::Profile>) -> bool {
+fn find_profile_by_id(id: usize, ref_profile_storage: &Vec<structs_enums::Profile>) -> &structs_enums::Profile {
     let index = id - 1;
     let ref_single_val = &ref_profile_storage[index];
     println!("{:?}", ref_single_val);
 
-    true
+    ref_single_val
 }
 
 fn quit_or_cont() -> bool {
@@ -173,7 +173,5 @@ mod tests {
         assert_eq!(find_profile_by_id(2, &test_storage), &ans2);
         assert_eq!(find_profile_by_id(3, &test_storage), &ans3);
     }
-    
-
 }
 
