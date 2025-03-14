@@ -39,6 +39,19 @@ pub mod helper_fn {
         convert
     }
 
+    // lol found in the rust book woohoo just what i needed
+    // TODO: get rest of string
+    pub fn read_first_word(input_string: &String) -> &str {
+        let input_as_bytes = input_string.as_bytes();
+        
+        for(i, &item) in input_as_bytes.iter().enumerate(){
+            if item == b' ' {
+                return &input_string[0..i]
+            }
+        }
+        &input_string[..]
+    }
+
 }
 
 // TODO: How do you read the inputs and read symbols?

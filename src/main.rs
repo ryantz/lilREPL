@@ -6,6 +6,7 @@ enum NavChoice {
     ProfileBuilder,
     ProfileViewer,
     ProfileFinder,
+    KeywordFunctions,
     FileExplorer,
     NotSelected,
 }
@@ -21,7 +22,6 @@ fn main() {
     if user_in == String::from("start") || user_in == String::from("s") {
         program_status = true;
     }
-
     let mut profile_storage: Vec<structs_enums::Profile> = Vec::new();
 
     while program_status {
@@ -31,12 +31,13 @@ fn main() {
         println!("{}Hello!{}", colors::GREEN, colors::RESET);
         ui_cmpts::insert_line();
 
-        let greeting_choice: NavChoice = navigate(helper_fn::string_to_int(helper_fn::display_then_read("Navigation:\n1. Build profile:\n2. View profile\n3. Find Profile\n4. File Explorer\n\n")));
+        let greeting_choice: NavChoice = navigate(helper_fn::string_to_int(helper_fn::display_then_read("Navigation:\n1. Build profile:\n2. View profile\n3. Find Profile\n4. Keyword detect\n5. File Explorer\n\n")));
         
         let end_or_no = match greeting_choice {
             NavChoice::ProfileBuilder => build_profile(&mut profile_storage),
             NavChoice::ProfileViewer => view_stored_profiles(&profile_storage),
             NavChoice::ProfileFinder => profile_finder(&profile_storage),
+            NavChoice::KeywordFunctions => keyword_detect(), 
             NavChoice::FileExplorer => ui_cmpts::not_done_notice(),
             NavChoice::NotSelected => quit_or_cont(),
         };
@@ -50,7 +51,8 @@ fn navigate(choice: u8) -> NavChoice {
         1 => NavChoice::ProfileBuilder,
         2 => NavChoice::ProfileViewer,
         3 => NavChoice::ProfileFinder,
-        4 => NavChoice::FileExplorer,
+        4 => NavChoice::KeywordFunctions,
+        5 => NavChoice::FileExplorer,
         _ => NavChoice::NotSelected,
     };
 
@@ -121,6 +123,20 @@ fn quit_or_cont() -> bool {
     } else {
         true
     }
+}
+
+// TODO:: return bool cuz of the match statement to quit the loop
+// WARN: logic errors
+fn keyword_detect() -> bool {
+    let keywords: Vec<&str> = vec!["shout", "abs"];
+    let get_user_input = helper_fn::display_then_read("Input something to see if it is a keyword: ");
+    let key = helper_fn::read_first_word(&get_user_input);
+
+    for i in 0..keywords.len() {
+        //println!("{}",keywords[i]);
+    }
+
+    true
 }
 
 
