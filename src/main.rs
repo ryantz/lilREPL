@@ -23,6 +23,7 @@ fn main() {
         program_status = true;
     }
     let mut profile_storage: Vec<structs_enums::Profile> = Vec::new();
+    //let mut sensitive_storage:HashMap<,> = HashMap::new();
 
     while program_status {
 
@@ -109,8 +110,8 @@ fn profile_finder(ref_profile_storage: &Vec<structs_enums::Profile>) -> bool {
 
 fn find_profile_by_id(id: usize, ref_profile_storage: &Vec<structs_enums::Profile>) -> &structs_enums::Profile {
     let index = id - 1;
+    // slice
     let ref_single_val = &ref_profile_storage[index];
-    println!("{:?}", ref_single_val);
 
     ref_single_val
 }
@@ -125,69 +126,16 @@ fn quit_or_cont() -> bool {
     }
 }
 
-// TODO:: return bool cuz of the match statement to quit the loop
-// WARN: logic errors
 fn keyword_detect() -> bool {
-    let keywords: Vec<&str> = vec!["shout", "abs"];
-    let get_user_input = helper_fn::display_then_read("Input something to see if it is a keyword: ");
-    let key = helper_fn::read_first_word(&get_user_input);
-
-    for i in 0..keywords.len() {
-        //println!("{}",keywords[i]);
+    let user_input = helper_fn::display_then_read("type: ");
+    // find first word
+    let key: &str = helper_fn::read_first_word(&user_input);
+    
+    match key {
+        keywords::SHOUT => println!("shouting:{}" , helper_fn::disp_after_keyword(&user_input).to_uppercase()),
+        _ => println!("No keyword detected"),
     }
-
     true
 }
 
-
-// some tests
-#[cfg(test)]
-mod tests {
-    use super::*;
- 
-    // good path
-    #[test]
-    fn test_fn_find_people_by_id() {
-        let prof1 = structs_enums::Profile {
-            name: String::from("ry"),
-            age: 28,
-            user_type: structs_enums::UserType::Admin,
-        };
-
-        let prof2 = structs_enums::Profile {
-            name: String::from("bob"),
-            age: 22,
-            user_type: structs_enums::UserType::User,
-        };
-
-        let prof3 = structs_enums::Profile {
-            name: String::from("black"),
-            age: 20,
-            user_type: structs_enums::UserType::NotSelected,
-        };
-
-        let ans1 = structs_enums::Profile { 
-            name: String::from("ry"),
-            age: 28,
-            user_type: structs_enums::UserType::Admin,
-        };
-
-        let ans2 = structs_enums::Profile {
-            name: String::from("bob"),
-            age: 22,
-            user_type: structs_enums::UserType::User,
-        };
-
-        let ans3 = structs_enums::Profile {
-            name: String::from("black"),
-            age: 20,
-            user_type: structs_enums::UserType::NotSelected,
-        };
-        let test_storage: Vec<structs_enums::Profile> = vec![prof1, prof2, prof3];
-
-        assert_eq!(find_profile_by_id(1, &test_storage), &ans1);
-        assert_eq!(find_profile_by_id(2, &test_storage), &ans2);
-        assert_eq!(find_profile_by_id(3, &test_storage), &ans3);
-    }
-}
 

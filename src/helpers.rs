@@ -13,7 +13,7 @@ pub mod helper_fn {
     //    io::stdout().flush().expect("no input");
     //    todo!();
     //}
-
+    
     pub fn display_then_read(string_to_display: &str) -> String {
         print!("{}", string_to_display);
         io::stdout().flush().expect("No input");
@@ -51,6 +51,17 @@ pub mod helper_fn {
         }
         &input_string[..]
     }
+
+   pub fn disp_after_keyword(input_string: &String) -> &str {
+        let input_as_bytes = input_string.as_bytes();
+        
+        for(i, &item) in input_as_bytes.iter().enumerate(){
+            if item == b' ' {
+                return &input_string[i..]
+            }
+        }
+        &input_string[..]
+    } 
 
 }
 
@@ -162,4 +173,8 @@ pub mod colors {
     pub const YELLOW: &str = "\x1b[93m";
     pub const MAGENTA: &str = "\x1b[95m";
     pub const CYAN: &str = "\x1b[96m";
+}
+
+pub mod keywords {
+    pub const SHOUT: &str = "shout";
 }
