@@ -3,7 +3,7 @@
 //mod tests {
 //    use super::*;
 //    use crate::helper_fn::*;
-// 
+//
 //    // good path
 //    #[test]
 //    fn test_fn_find_people_by_id() {
@@ -25,7 +25,7 @@
 //            user_type: structs_enums::UserType::NotSelected,
 //        };
 //
-//        let ans1 = structs_enums::Profile { 
+//        let ans1 = structs_enums::Profile {
 //            name: String::from("ry"),
 //            age: 28,
 //            user_type: structs_enums::UserType::Admin,

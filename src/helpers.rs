@@ -177,4 +177,5 @@ pub mod colors {
 
 pub mod keywords {
     pub const SHOUT: &str = "shout";
+    pub const WHERE: &str = "where";
 }

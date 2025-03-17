@@ -98,7 +98,6 @@ fn view_stored_profiles(ref_profile_storage: &Vec<structs_enums::Profile>) -> bo
     true
 }
 
-// hello from desktop
 fn profile_finder(ref_profile_storage: &Vec<structs_enums::Profile>) -> bool {
     ui_cmpts::profile_finder_greeting();
 
@@ -130,12 +129,10 @@ fn keyword_detect() -> bool {
     let user_input = helper_fn::display_then_read("\n");
     // find first word
     let key: &str = helper_fn::read_first_word(&user_input);
-     // test
+
     match key {
         keywords::SHOUT => println!("shouting:{} \n" , helper_fn::disp_after_keyword(&user_input).to_uppercase()),
         _ => println!("No keyword detected"),
     }
     true
 }
-
-
