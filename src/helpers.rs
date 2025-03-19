@@ -4,7 +4,7 @@ pub mod helper_fn {
 
     // bring the std io library into the module scope
     use std::io::{self, Write};
-    
+
     // TODO:syntax highlighting for some words in the enum Keywords
     // how to get the first word in the user input? slices?
     // how to change the colours in real time?
@@ -13,7 +13,7 @@ pub mod helper_fn {
     //    io::stdout().flush().expect("no input");
     //    todo!();
     //}
-    
+
     pub fn display_then_read(string_to_display: &str) -> String {
         print!("{}", string_to_display);
         io::stdout().flush().expect("No input");
@@ -43,30 +43,29 @@ pub mod helper_fn {
     // TODO: get rest of string
     pub fn read_first_word(input_string: &String) -> &str {
         let input_as_bytes = input_string.as_bytes();
-        
-        for(i, &item) in input_as_bytes.iter().enumerate(){
+
+        for (i, &item) in input_as_bytes.iter().enumerate() {
             if item == b' ' {
-                return &input_string[0..i]
+                return &input_string[0..i];
             }
         }
         &input_string[..]
     }
 
-   pub fn disp_after_keyword(input_string: &String) -> &str {
+    pub fn disp_after_keyword(input_string: &String) -> &str {
         let input_as_bytes = input_string.as_bytes();
-        
-        for(i, &item) in input_as_bytes.iter().enumerate(){
+
+        for (i, &item) in input_as_bytes.iter().enumerate() {
             if item == b' ' {
-                return &input_string[i..]
+                return &input_string[i..];
             }
         }
         &input_string[..]
-    } 
-
+    }
 }
 
 // TODO: How do you read the inputs and read symbols?
-// input => solve 1 + 1 
+// input => solve 1 + 1
 // output => 2
 // pub mod simple_maths {
 //     pub fn add(){
