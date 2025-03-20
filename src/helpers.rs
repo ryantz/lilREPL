@@ -74,6 +74,48 @@ pub mod helper_fn {
 // }
 
 pub mod structs_enums {
+    use std::time::SystemTime;
+
+    #[derive(Debug)]
+    pub enum Feelings {
+        Happy,
+        Sad,
+        Hopeful,
+        Despair,
+        Excited,
+        Motivated,
+        NoFeelings,
+    }
+
+    #[derive(Debug)]
+    pub struct FeelingBoard {
+        feeling: Feelings,
+        timestamp: SystemTime,
+    }
+
+    impl FeelingBoard {
+        pub fn show(&self) {
+            println!("Feelings saved: {:?}\nDate:{:?}", self.feeling, self.timestamp);
+        }
+
+        pub fn build(selection: u8, timestamp: SystemTime) -> Self {
+            let user_selected_feeling: Feelings = match selection {
+                1 => Feelings::Happy,
+                2 => Feelings::Sad,
+                3 => Feelings::Hopeful,
+                4 => Feelings::Despair,
+                5 => Feelings::Excited,
+                6 => Feelings::Motivated,
+                _ => Feelings::NoFeelings ,
+            };
+
+            Self {
+                feeling: user_selected_feeling,
+                timestamp,
+            }
+        }
+    }
+
     #[derive(Debug, PartialEq)]
     pub enum UserType {
         Admin,

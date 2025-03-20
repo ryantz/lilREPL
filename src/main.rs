@@ -1,11 +1,14 @@
 mod helpers;
-use helpers::*;
+use helpers::{structs_enums::FeelingBoard, *};
+
+use std::time::SystemTime;
 
 #[derive(PartialEq)]
 enum NavChoice {
     ProfileBuilder,
     ProfileViewer,
     ProfileFinder,
+    FeelingBoard,
     KeywordFunctions,
     FileExplorer,
     NotSelected,
@@ -24,6 +27,7 @@ fn main() {
         program_status = true;
     }
     let mut profile_storage: Vec<structs_enums::Profile> = Vec::new();
+    let mut feeling_board_storage: Vec<structs_enums::FeelingBoard> = Vec::new();
     //let mut sensitive_storage:HashMap<,> = HashMap::new();
 
     while program_status {
@@ -42,6 +46,7 @@ fn main() {
             NavChoice::ProfileBuilder => build_profile(&mut profile_storage),
             NavChoice::ProfileViewer => view_stored_profiles(&profile_storage),
             NavChoice::ProfileFinder => profile_finder(&profile_storage),
+            NavChoice::FeelingBoard => todo!(),
             NavChoice::KeywordFunctions => keyword_detect(),
             NavChoice::FileExplorer => ui_cmpts::not_done_notice(),
             NavChoice::NotSelected => quit_or_cont(),
@@ -56,8 +61,9 @@ fn navigate(choice: u8) -> NavChoice {
         1 => NavChoice::ProfileBuilder,
         2 => NavChoice::ProfileViewer,
         3 => NavChoice::ProfileFinder,
-        4 => NavChoice::KeywordFunctions,
-        5 => NavChoice::FileExplorer,
+        4 => NavChoice::FeelingBoard,
+        5 => NavChoice::KeywordFunctions,
+        6 => NavChoice::FileExplorer,
         _ => NavChoice::NotSelected,
     };
 
@@ -161,4 +167,22 @@ fn keyword_detect() -> bool {
         _ => println!("No keyword detected"),
     }
     true
+}
+
+fn save_feeling_board(feeling_board: structs_enums::FeelingBoard, ref_feeling_board_storage: &mut Vec<structs_enums::FeelingBoard> ) -> &mut Vec<structs_enums::FeelingBoard> {
+    ref_feeling_board_storage.push(feeling_board);
+
+    ref_feeling_board_storage
+}
+
+fn feeling_board_build(ref_feeling_board_storage: &mut Vec<structs_enums::FeelingBoard> ) -> 
+&mut Vec<structs_enums::FeelingBoard> { 
+    let user_feeling_selection:u8  = helper_fn::string_to_int(helper_fn::display_then_read("What are you feeling right now?\n1.Happy\n2.Sad\n3.Hopeful\n3.Despair\n4.Excited\n5.Motivated\n6.Nothing Much..\n"));
+    
+    // actually just time
+    let date = SystemTime::now();
+    let feeling_board_entry = structs_enums::FeelingBoard::build(user_feeling_selection, date);
+
+    save_feeling_board(feeling_board_entry, ref_feeling_board_storage)
+
 }
