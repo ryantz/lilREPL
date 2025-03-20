@@ -38,7 +38,7 @@ fn main() {
 
         let greeting_choice: NavChoice = navigate(helper_fn::string_to_int(
             helper_fn::display_then_read(
-                "Navigation:\n1. Build profile:\n2. View profile\n3. Find Profile\n4. Keyword detect\n5. File Explorer\n\n",
+                "Navigation:\n1. Build profile:\n2. View profile\n3. Find Profile\n4. Feeling Board\n 5. Keyword detect\n6. File Explorer\n\n",
             ),
         ));
 
@@ -46,7 +46,7 @@ fn main() {
             NavChoice::ProfileBuilder => build_profile(&mut profile_storage),
             NavChoice::ProfileViewer => view_stored_profiles(&profile_storage),
             NavChoice::ProfileFinder => profile_finder(&profile_storage),
-            NavChoice::FeelingBoard => todo!(),
+            NavChoice::FeelingBoard => feeling_board_build(&mut feeling_board_storage),
             NavChoice::KeywordFunctions => keyword_detect(),
             NavChoice::FileExplorer => ui_cmpts::not_done_notice(),
             NavChoice::NotSelected => quit_or_cont(),
@@ -176,13 +176,13 @@ fn save_feeling_board(feeling_board: structs_enums::FeelingBoard, ref_feeling_bo
 }
 
 fn feeling_board_build(ref_feeling_board_storage: &mut Vec<structs_enums::FeelingBoard> ) -> 
-&mut Vec<structs_enums::FeelingBoard> { 
+ bool { 
     let user_feeling_selection:u8  = helper_fn::string_to_int(helper_fn::display_then_read("What are you feeling right now?\n1.Happy\n2.Sad\n3.Hopeful\n3.Despair\n4.Excited\n5.Motivated\n6.Nothing Much..\n"));
     
     // actually just time
     let date = SystemTime::now();
     let feeling_board_entry = structs_enums::FeelingBoard::build(user_feeling_selection, date);
 
-    save_feeling_board(feeling_board_entry, ref_feeling_board_storage)
-
+    save_feeling_board(feeling_board_entry, ref_feeling_board_storage);
+    true
 }
