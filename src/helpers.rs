@@ -76,6 +76,10 @@ pub mod helper_fn {
 pub mod structs_enums {
     use std::time::SystemTime;
 
+    pub trait Show {
+        fn show(&self) -> String;
+    }
+
     #[derive(Debug)]
     pub enum Feelings {
         Happy,
@@ -93,10 +97,19 @@ pub mod structs_enums {
         timestamp: SystemTime,
     }
 
-    impl FeelingBoard {
-        pub fn show(&self) {
-            println!("Feelings saved: {:?}\nDate:{:?}", self.feeling, self.timestamp);
+    impl Show for FeelingBoard {
+        fn show(&self) -> String {
+            format!("You are feeling: {:?}\nRegistered @ {:?}", self.feeling, self.timestamp)
         }
+    }
+
+    impl FeelingBoard {
+        //pub fn show(&self) {
+        //    println!(
+        //        "Feelings saved: {:?}\nDate:{:?}",
+        //        self.feeling, self.timestamp
+        //    );
+        //}
 
         pub fn build(selection: u8, timestamp: SystemTime) -> Self {
             let user_selected_feeling: Feelings = match selection {
@@ -106,7 +119,7 @@ pub mod structs_enums {
                 4 => Feelings::Despair,
                 5 => Feelings::Excited,
                 6 => Feelings::Motivated,
-                _ => Feelings::NoFeelings ,
+                _ => Feelings::NoFeelings,
             };
 
             Self {
@@ -123,6 +136,13 @@ pub mod structs_enums {
         NotSelected,
     }
 
+    impl Show for Profile {
+        fn show(&self) -> String {
+            format!("Preview:\nname: {}\nage: {}\nuser type: {:?}\n",
+            self.name, self.age, self.user_type)
+        }
+    }
+
     #[derive(Debug, PartialEq)]
     pub struct Profile {
         pub name: String,
@@ -131,12 +151,12 @@ pub mod structs_enums {
     }
 
     impl Profile {
-        pub fn show(&self) {
-            println!(
-                "Preview:\n\nname: {},\nage: {},\nuser type: {:?}\n",
-                self.name, self.age, self.user_type
-            );
-        }
+        //pub fn show(&self) {
+        //    println!(
+        //        "Preview:\n\nname: {},\nage: {},\nuser type: {:?}\n",
+        //        self.name, self.age, self.user_type
+        //    );
+        //}
 
         pub fn build(name: String, age: u8, user_type_selection: u8) -> Self {
             let user_type_selected: UserType = match user_type_selection {
