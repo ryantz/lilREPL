@@ -5,7 +5,8 @@ use repl::*;
 fn main() {
     ui_cmpts::insert_line();
     let user_in = helper_fn::display_then_read(
-        "W E L C O M E - T O - lilREPL\nTo start, enter: [start / s]\n",
+        "W E L C O M E - T O - lilREPL\n\
+To start, enter: [start / s]\n",
     );
     ui_cmpts::insert_line();
 
